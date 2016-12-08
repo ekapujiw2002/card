@@ -1,6 +1,6 @@
 {
   "name": "card",
-  "version": "2.0.3",
+  "version": "2.0.6",
   "author": "Jesse Pollak <jpollak92@gmail.com>",
   "description": "Card lets you add an interactive, CSS3 credit card animation to your credit card form to help your users through the process.",
   "main": "lib/card.js",
@@ -19,13 +19,13 @@
     }
   ],
   "scripts": {
-    "clean": "rm -rf ./lib/ && rm -rf ./dist/",
+    "clean": "rimraf ./lib/ && rimraf ./dist/",
     "compile": "npm run clean && npm run compile:lib && npm run compile:dist",
     "compile:lib": "coffee --compile -o ./lib/ ./src/coffee/card.coffee && node-sass ./src/scss/card.scss -o lib/ && replace '../scss/card.scss' './card.css' lib/card.js",
-    "compile:dist": "NODE_ENV=production webpack",
+    "compile:dist": "npm run env NODE_ENV=production && webpack",
     "development": "webpack-dev-server --hot --inline",
     "preversion": "npm run compile",
-    "prepublish": "NODE_ENV=production npm run compile",
+    "prepublish": "npm run env NODE_ENV=production && npm run compile",
     "postpublish": "git push origin master && git push --tags",
     "test": "karma start --single-run --browsers PhantomJS"
   },
@@ -40,6 +40,7 @@
     "node-sass": "^3.8.0",
     "nodemon": "~1.9.2",
     "replace": "^0.3.0",
+    "rimraf": "^2.5.4",
     "run-sequence": "~1.2.1",
     "sass-loader": "^3.2.2",
     "style-loader": "^0.13.1",
